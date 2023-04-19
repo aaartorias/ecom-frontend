@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
 
 export class ProductService {
 
-  private baseUrl = 'http://localhost:8080/api/products'
+  private baseUrl = 'http://localhost:8080/api/products?size=100'
 
   // inject HttpClient
   constructor(private httpClient : HttpClient) { }
@@ -20,9 +20,8 @@ export class ProductService {
     return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
       map(response => response._embedded.products) // map response to our data type
     );
-  }
+  } 
 }
-
 
   interface GetResponse {
     _embedded : {

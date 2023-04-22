@@ -54,7 +54,8 @@ p{
 }
 
 h1,h2,h3,h4,h5,h6{
-    color:#333;
+    /* color:#adb5bd; */
+    color:#060606;
     font-weight:700;
     margin:0;
     line-height:1.2
@@ -107,12 +108,13 @@ a,a:hover{
 
 .page-wrapper{
     overflow:hidden;
-    background:#e5e5e5;
+    background:#f9f6f6;
     padding-bottom:8vh
 }
 
 .page-container{
-    background:#e5e5e5;
+    /* background:#570404; */
+    background:#ffffff;
     padding-left:200px
 }
 
@@ -122,7 +124,7 @@ a,a:hover{
 }
 
 aside.menu-sidebar.d-none.d-lg-block.clr{
-    background:0 0;
+    background:#05143f;
     z-index:99999999;
     height:75px;
     box-shadow:-2px 0 4px #0000003b
@@ -284,11 +286,11 @@ input.au-input.au-input-xl{
     right:0;
     min-width:95px;
     color:#1a0739;
-    border:1px solid #757576;
+    border:1px solid #ebe3e3ed;
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
     border-radius:43px;
-    background:#757576
+    background:#ebe3e3ed
 }
 
 .au-btn-submit:hover{
@@ -320,12 +322,12 @@ input.au-input.au-input-xl{
     left:0;
     top:0;
     bottom:0;
-    background:#fff;
+    background:#05143f;
     overflow-y:auto
 }
 
 .menu-sidebar .logo{
-    background:#fff;
+    background:#6f6969;
     height:75px;
     padding:0 35px;
     display:-webkit-box;
@@ -369,7 +371,7 @@ input.au-input.au-input-xl{
 
 .navbar-sidebar .navbar-list li a{
     display:block;
-    color:#555;
+    color:#f8f4f4;
     font-size:16px;
     padding:5px 0
 }
@@ -547,7 +549,7 @@ input.au-input.au-input-xl{
 }
 .product-box h1{
     font-size:18px;
-    border-bottom:1px solid #ccc;
+    border-bottom:1px solid #464040;
     padding-bottom:5px;
     font-weight:600;
     padding-top:12px;
@@ -557,7 +559,7 @@ input.au-input.au-input-xl{
     font-size:15px;
     padding-bottom:0;
     font-weight:500;
-    color:#585858
+    color:#ffffff
 }
 
 /* 
@@ -567,7 +569,7 @@ input.au-input.au-input-xl{
  */
 
 .form-area{
-    background:#e5e5e5;
+    background:#f7f1f1;
     position:relative;
     margin-bottom:45px;
     padding:50px 20px;
@@ -718,7 +720,7 @@ table.table.table-bordered th{
  .price{
     margin:15px 0 0;
     font-weight:800;
-    color:#0da8e4
+    color:#083e39e9
 }
 .detail-section{
     margin-top:60px
@@ -747,7 +749,7 @@ a.primary-btn{
     margin-top:5px
 }
 a.primary-btn:hover{
-    background:#0da8e4;
+    background:#797e79;
     color:#fff
 }
 

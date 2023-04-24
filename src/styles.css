@@ -722,8 +722,12 @@ table.table.table-bordered th{
     font-weight:800;
     color:#083e39e9
 }
+
 .detail-section{
     margin-top:60px
+}
+.detail-img{
+    width: 30%;
 }
 /**/
 

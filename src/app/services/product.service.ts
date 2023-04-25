@@ -27,7 +27,7 @@ export class ProductService {
   // }
   
   getProductList(categoryId : number) : Observable<Product[]> {
-    // console.log(`get product list + ${categoryId}`);
+    console.log(`get product list + ${categoryId}`);
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
     // console.log(`search Url ${searchUrl}`)
     return this.getProducts(searchUrl);
@@ -61,6 +61,7 @@ export class ProductService {
                          categoryId : number) : Observable<GetResponseProducts> {
     const url = `${this.baseUrl}/search/findByCategoryId` 
                 + `?id=${categoryId}&page=${pageNumber}&size=${pageSize}`;
+                console.log(`get product list paginate`)
     return this.httpClient.get<GetResponseProducts>(url);
   }
 

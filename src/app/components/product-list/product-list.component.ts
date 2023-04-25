@@ -19,7 +19,7 @@ export class ProductListComponent implements OnInit {
 
   // pagination properties
   pageNumber: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 5;
   totalElements: number = 0;
 
   // ProductService

@@ -22,6 +22,8 @@ export class ProductListComponent implements OnInit {
   pageSize: number = 5;
   totalElements: number = 0;
 
+  previousKeyWord: string = "";
+
   // ProductService
   // ActiatedRoute - Current active route that loaded the component. Useful for accessing route parameters.
   // will help in fetching categoryId
@@ -47,12 +49,27 @@ export class ProductListComponent implements OnInit {
 
   handleSearchProducts() {
     const keyword : string = this.route.snapshot.paramMap.get("keyword")!;
-    this.productService.searchProducts(keyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
 
+    if (keyword != this.previousKeyWord) {
+      this.pageNumber = 1;
+    }
+
+    this.previousKeyWord = keyword;
+    console.log(`keyword=${keyword}, pageNumber=${this.pageNumber}`)
+
+    this.productService.searchProductsPaginate(this.pageNumber - 1,
+                                               this.pageSize, 
+                                               keyword)
+                                              .subscribe(this.processResult());
+  }
+
+  processResult() {
+    return (data : any) => {
+      this.products = data._embedded.products;
+      this.pageNumber = data.page.number + 1;
+      this.pageSize = data.page.size;
+      this.totalElements = data.page.totalElements;
+    };
   }
 
   handleListProducts() {
@@ -86,20 +103,7 @@ export class ProductListComponent implements OnInit {
     this.productService.getProductListPaginate(this.pageNumber - 1,
                                                this.pageSize,
                                                this.currentCategoryId)
-                                               .subscribe(
-                                                data => {
-                                                  this.products = data._embedded.products;
-                                                  this.pageNumber = data.page.number + 1;
-                                                  this.pageSize = data.page.size;
-                                                  this.totalElements = data.page.totalElements;
-                                                }
-                                               );
-
-    // this.productService.getProductList(this.currentCategoryId).subscribe(
-    //   data => {
-    //     this.products = data;
-    //   }
-    // );
+                                               .subscribe(this.processResult());
   }
 
   updatePageSize(pageSize: string) {

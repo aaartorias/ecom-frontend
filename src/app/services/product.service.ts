@@ -10,11 +10,6 @@ import { ProductCategory } from '../common/product-category';
 })
 
 export class ProductService {
-  //   );
-  // } 
-  // }
-  
-  
 
   // private baseUrl = 'http://localhost:8080/api/products?size=100'
   private baseUrl = 'http://localhost:8080/api/products'
@@ -30,7 +25,7 @@ export class ProductService {
   //   );
   // } 
   // }
-
+  
   getProductList(categoryId : number) : Observable<Product[]> {
     // console.log(`get product list + ${categoryId}`);
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
@@ -38,12 +33,6 @@ export class ProductService {
     return this.getProducts(searchUrl);
   }
   
-  // getProductCategories() : Observable<ProductCategory[]>{
-  //   console.log("calling get product categories");
-  //   return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
-  //     map(response => response._embedded.productCategory)
-  //   );
-  // }
   getProductCategories(): Observable<ProductCategory[]> {
 		return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
 						map(response => response._embedded.productCategory)
@@ -66,16 +55,32 @@ export class ProductService {
       map(response => response._embedded.products)  // map response to our data type
     );
   }
+
+  getProductListPaginate(pageNumber: number,
+                         pageSize: number,
+                         categoryId : number) : Observable<GetResponseProducts> {
+    const url = `${this.baseUrl}/search/findByCategoryId` 
+                + `?id=${categoryId}&page=${pageNumber}&size=${pageSize}`;
+    return this.httpClient.get<GetResponseProducts>(url);
+  }
+
 }
 
-  interface GetResponseProducts {
-    _embedded : {
-      products : Product[];
+interface GetResponseProducts {
+  _embedded : {
+    products : Product[];
+  },
+  page: {
+    size: number,
+    totalElements: number,
+    totalPages: number,
+    number: number
     }
   }
 
-  interface GetResponseProductCategory {
-    _embedded : {
-      productCategory : ProductCategory[];
-    }
+interface GetResponseProductCategory {
+  _embedded : {
+    productCategory : ProductCategory[];
   }
+}
+

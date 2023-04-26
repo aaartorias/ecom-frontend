@@ -65,4 +65,24 @@ export class CartService {
     return this.cartItems.length == 0;
   }
 
+  removeFromCart(cartItem: CartItem) {
+    --cartItem.quantity;
+    
+    if (cartItem.quantity == 0) {
+      this.removeItemFromCart(cartItem);
+    } else {
+      this.computeCartTotals();
+    }
+
+  }
+  
+  removeItemFromCart(cartItemToRemove: CartItem) {
+    let cartItemToRemoveIndex = this.cartItems.findIndex(cartItem => cartItem.id == cartItemToRemove.id)!;
+
+    if (cartItemToRemoveIndex > -1) {
+      this.cartItems.splice(cartItemToRemoveIndex, 1);
+      this.computeCartTotals();
+    }
+  }
+
 }

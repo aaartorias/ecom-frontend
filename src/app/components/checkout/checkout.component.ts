@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Country } from 'src/app/common/country';
+import { State } from 'src/app/common/state';
 import { CheckoutFormService } from 'src/app/services/checkout-form.service';
 
 @Component({
@@ -13,8 +15,15 @@ export class CheckoutComponent implements OnInit{
   checkoutFormGroup!: FormGroup;
   totalQuantity: number = 0;
   totalPrice: number = 0;
+  
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
+  
+  countries: Country[] = [];
+  shippingAddressStates: State[] = [];
+  billingAddressStates: State[] = [];
+
+  disableBillingAddress: boolean = false;
 
   constructor(private formBuilder: FormBuilder, 
               private checkoutFormService: CheckoutFormService) { }
@@ -71,6 +80,12 @@ export class CheckoutComponent implements OnInit{
       }
     );
 
+    this.checkoutFormService.getCountries().subscribe(
+      data => this.countries = data
+    );
+    
+    
+
   }
 
   placeOrder() {
@@ -81,10 +96,16 @@ export class CheckoutComponent implements OnInit{
   copyShippingAddressToBillingAddress(event: any) {
 
     if (event?.target?.checked) {
-    this.checkoutFormGroup.controls['billingAddress']
+      this.checkoutFormGroup.controls['billingAddress']
           .setValue(this.checkoutFormGroup.controls['shippingAddress'].value);
+      this.billingAddressStates = this.shippingAddressStates;
+      this.disableBillingAddress = true;
+      this.checkoutFormGroup.controls['billingAddress'].disable();
     } else {
       this.checkoutFormGroup.controls['billingAddress'].reset();
+      this.billingAddressStates = [];
+      this.disableBillingAddress = false;
+      this.checkoutFormGroup.controls['billingAddress'].enable();
     }
 
   }
@@ -106,6 +127,22 @@ export class CheckoutComponent implements OnInit{
       data => this.creditCardMonths = data
     );
 
+  }
+
+  getStates(formGroupName: string) {
+    const formGroup = this.checkoutFormGroup.get(formGroupName);
+    const countryCode = formGroup?.value.country.code;
+    
+    this.checkoutFormService.getStates(countryCode).subscribe(
+      data => {
+        if (formGroupName === 'shippingAddress') {
+          this.shippingAddressStates = data;
+        } else {
+          this.billingAddressStates = data;
+        }
+        formGroup?.get('state')?.setValue(data[0]);
+      }
+    );
   }
 
 }

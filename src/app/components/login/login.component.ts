@@ -18,10 +18,16 @@ export class LoginComponent implements OnInit {
 
     this.oktaSignin = new OktaSignIn({
       logo: 'assets/images/solaire.png',
+      // baseUrl: appConfig.oidc.issuer.split('/oauth2')[0],
+      // clientId: appConfig.oidc.clientId,
+      // redirectUri: appConfig.oidc.redirectUri,
+      // grant_type: 'authorization_code',
+      // logo: './assets/images/solarie.png',
       baseUrl: appConfig.oidc.issuer.split('/oauth2')[0],
       clientId: appConfig.oidc.clientId,
       redirectUri: appConfig.oidc.redirectUri,
-      grant_type: 'authorization_code',
+      // grant_type: 'authorization_code',
+      useClassicEngine: true,
       authParams: {
         pkce: true,
         issuer: appConfig.oidc.issuer,

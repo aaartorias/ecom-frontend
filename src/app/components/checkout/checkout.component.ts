@@ -32,6 +32,10 @@ export class CheckoutComponent implements OnInit{
 
   disableBillingAddress: boolean = false;
 
+  storage: Storage = sessionStorage;
+
+  userEmailKey: string = 'userEmail';
+
   constructor(private formBuilder: FormBuilder, 
               private checkoutFormService: CheckoutFormService,
               private cartService: CartService,
@@ -39,6 +43,8 @@ export class CheckoutComponent implements OnInit{
               private router: Router) { }
 
   ngOnInit(): void {
+    this.reviewCart();
+    const userEmail = JSON.parse(this.storage.getItem(this.userEmailKey)!);
 
     this.checkoutFormGroup = this.formBuilder.group({
       
@@ -54,7 +60,7 @@ export class CheckoutComponent implements OnInit{
                                   Validators.minLength(2), 
                                   CheckoutFormValidators.onlyWhiteSpace]),
 
-        email: new FormControl('', 
+        email: new FormControl(userEmail, 
                               [Validators.required, 
                               Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
@@ -154,6 +160,16 @@ export class CheckoutComponent implements OnInit{
       totalQuantity => this.totalQuantity = totalQuantity
     );
     
+  }
+
+  reviewCart() {
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = totalPrice
+    );
+
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = totalQuantity
+    );
   }
 
   placeOrder() {
